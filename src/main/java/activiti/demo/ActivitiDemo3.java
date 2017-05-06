@@ -1,10 +1,5 @@
 package activiti.demo;
 
-import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
-import java.util.zip.ZipInputStream;
-
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RuntimeService;
@@ -12,10 +7,11 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
 import org.junit.Test;
 
-import activiti.pojo.Person;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 请假流程例子--设置变量
@@ -28,14 +24,14 @@ public class ActivitiDemo3 {
 	 * */
 	@Test
 	public void deploymentProcessDefinition_inputStream () {
-		InputStream streambpmn = this.getClass().getResourceAsStream("/bpmn/LeaveOfProcess2.bpmn");
-		InputStream streambpng = this.getClass().getResourceAsStream("/bpmn/LeaveOfProcess2.png");
+		InputStream streambpmn = this.getClass().getResourceAsStream("/bpmn/排他节点.bpmn");
+		InputStream streampng = this.getClass().getResourceAsStream("/bpmn/排他节点.bpmn");
 		Deployment deploy = processEngine.getRepositoryService() //与流程定义和部署对象相关的Service
 					 .createDeployment() //创建一个部署对象
-					 .name("请假流程(设置变量)")
+					 .name("排他节点")
 					 //使用资源文件的名称(要求，与资源文件的名称要一致)，和输入流完成部署
-					 .addInputStream("LeaveOfProcess2.bpmn", streambpmn)
-					 .addInputStream("LeaveOfProcess2.png", streambpng)
+					 .addInputStream("排他节点.bpmn", streambpmn)
+					 .addInputStream("排他节点.png", streampng)
 					 .deploy();
 		System.out.println("部署ID："+ deploy.getId());
 		System.out.println("部署名称："+ deploy.getName());
@@ -43,6 +39,8 @@ public class ActivitiDemo3 {
 	
 	/**
 	 * 启动流程实例
+	 * 流程实例ID：5001
+	   流程定义ID：LeaveOfProcess2:1:2504
 	 * */
 	@Test
 	public void startProcessInstance () {
@@ -62,9 +60,9 @@ public class ActivitiDemo3 {
 		TaskService taskService = processEngine.getTaskService(); //与任务正在执行相关的Service
 		//任务ID
 		//String taskId = "35004";
-		String taskId = "40002";
+		String taskId = "27504";
 		 /**一：设置流程变量，使用基本数据类型*/  
-		//taskService.setVariableLocal(taskId, "请假天数", 5);//与任务ID绑定  
+		taskService.setVariableLocal(taskId, "请假天数", 5);//与任务ID绑定
 		taskService.setVariable(taskId, "请假日期", new Date());  
 		taskService.setVariableLocal(taskId, "请假原因", "xxxxfffx");  
         /**二：设置流程变量，使用javabean类型*/  
@@ -95,7 +93,7 @@ public class ActivitiDemo3 {
 		TaskService taskService = processEngine.getTaskService();//获取与执行任务相关的Service
 		//任务ID
 		//String taskId = "35004"; //act_ru_task表里的id
-		String taskId = "40002";
+		String taskId = "27504";
 		/**一：获取流程变量，使用基本数据类型*/  
 	     // Integer days = (Integer) taskService.getVariable(taskId, "请假天数");  
 	      Date date = (Date) taskService.getVariable(taskId, "请假日期");  
@@ -115,7 +113,7 @@ public class ActivitiDemo3 {
 	@Test
 	public void completeMyPersonalTask () {
 		//任务ID
-		String taskId = "35004";
+		String taskId = "27504";
 		processEngine.getTaskService() //与正在执行的任务管理相关的Service
 					 .complete(taskId);
 		System.out.println("完成任务：任务ID是"+taskId);

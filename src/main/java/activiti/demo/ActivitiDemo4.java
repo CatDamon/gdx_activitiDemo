@@ -1,10 +1,5 @@
 package activiti.demo;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.repository.Deployment;
@@ -12,14 +7,20 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.junit.Test;
 
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 连线
  */
+
 public class ActivitiDemo4 {
 	ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();  
 	  
 	/**部署流程定义（从inputStream）*/  
-	@Test  
+	@Test
 	public void deploymentProcessDefinition_inputStream(){  
 	    InputStream inputStreamBpmn = this.getClass().getResourceAsStream("/bpmn/LeaveOfProcess3.bpmn");  
 	    InputStream inputStreamPng = this.getClass().getResourceAsStream("/bpmn/LeaveOfProcess3.png");  
@@ -34,8 +35,9 @@ public class ActivitiDemo4 {
 	} 
 	
 	/**启动流程实例*/  
-	@Test  
-	public void startProcessInstance(){  
+	@Test
+	public void startProcessInstance(){
+
 	    //流程定义的key  
 	    String processDefinitionKey = "leaveOfProcess3";  
 	    ProcessInstance pi = processEngine.getRuntimeService()//与正在执行的流程实例和执行对象相关的Service  
@@ -55,7 +57,7 @@ public class ActivitiDemo4 {
 		########################################################
      * 
      * */  
-    @Test  
+    @Test
     public void findMyPersonalTask(){  
         String assignee = "总经理";  
         List<Task> list = processEngine.getTaskService()//与正在执行的任务管理相关的Service  
@@ -101,4 +103,5 @@ public class ActivitiDemo4 {
     				 .complete(taskId, variables);
     	System.out.println("完成任务：任务ID为"+taskId);
     }
+
 }

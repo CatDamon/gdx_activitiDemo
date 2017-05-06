@@ -33,7 +33,7 @@ public class ActivitiDemo2 {
 		             .deploy(); //完成部署
 		System.out.println("部署ID：" + deploy.getId());   //部署ID：17501
 		System.out.println("部署名称：" + deploy.getName()); //部署名称：请假流程
-		
+
 	}
 	
 	/**

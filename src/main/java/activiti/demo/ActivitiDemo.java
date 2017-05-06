@@ -3,6 +3,9 @@ package activiti.demo;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngineConfiguration;
 import org.junit.Test;
+import sun.applet.Main;
+
+import java.lang.reflect.MalformedParameterizedTypeException;
 
 /**
  * Hello world!
@@ -21,7 +24,7 @@ public class ActivitiDemo {
         pec.setJdbcUrl("jdbc:mysql://localhost:3306/db_activiti");
         pec.setJdbcUsername("root");
         pec.setJdbcPassword("root");
-         
+
         /**
          * false 不能自动创建表
          * create-drop 先删除表再创建表
@@ -39,8 +42,11 @@ public class ActivitiDemo {
     @Test  
     public void testCreateTableWithXml(){  
         // 引擎配置  
-        ProcessEngineConfiguration pec=ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");  
-        // 获取流程引擎对象  
+         ProcessEngineConfiguration pec=ProcessEngineConfiguration             .createProcessEngineConfigurationFromResource("activiti.cfg.xml");
+
+        // 获取流程引擎对象
         ProcessEngine processEngine=pec.buildProcessEngine();  
-    }  
+    }
+
+
 }
